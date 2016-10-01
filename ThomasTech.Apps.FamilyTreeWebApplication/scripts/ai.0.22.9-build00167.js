@@ -110,6 +110,7 @@ var Microsoft;
                             message.message = this.AiUserActionablePrefix + message.message;
                             this.warnToConsole(message.message);
                             this.logInternalMessage(severity, message);
+                            // test from vibin
                         }
                     }
                 }
