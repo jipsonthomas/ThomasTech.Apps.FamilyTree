@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f07f579c3e094590b84703bad1a4268b" Name="Diagram1">
+        <EntityTypeShape EntityType="FamilyTreeModel.MemberDate" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FamilyTreeModel.MemberRelation" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FamilyTreeModel.Member" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FamilyTreeModel.Relation" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FamilyTreeModel.User" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="FamilyTreeModel.FK_MemberDates_Members" ManuallyRouted="false" />
+        <AssociationConnector Association="FamilyTreeModel.FK_MemberRelations_Members" ManuallyRouted="false" />
+        <AssociationConnector Association="FamilyTreeModel.FK_MemberRelations_Relations" ManuallyRouted="false" />
+        <AssociationConnector Association="FamilyTreeModel.FK_MemberRelations_RelativeMembers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

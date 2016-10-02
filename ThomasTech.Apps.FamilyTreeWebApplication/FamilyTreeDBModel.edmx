@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FamilyTreeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MemberDates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTitle" Type="varchar" MaxLength="150" />
+          <Property Name="Date" Type="date" />
+          <Property Name="MemberID" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberRelations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" />
+          <Property Name="RelationID" Type="int" />
+          <Property Name="RelativeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="text" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Relations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Relation" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="text" />
+        </EntityType>
+        <Association Name="FK_MemberDates_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="MemberDates" Type="Self.MemberDates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberDates">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_Relations">
+          <End Role="Relations" Type="Self.Relations" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Relations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="RelationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_RelativeMembers">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="RelativeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FamilyTreeModelStoreContainer">
+          <EntitySet Name="MemberDates" EntityType="Self.MemberDates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberRelations" EntityType="Self.MemberRelations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Relations" EntityType="Self.Relations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MemberDates_Members" Association="Self.FK_MemberDates_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberDates" EntitySet="MemberDates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_Members" Association="Self.FK_MemberRelations_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_Relations" Association="Self.FK_MemberRelations_Relations">
+            <End Role="Relations" EntitySet="Relations" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_RelativeMembers" Association="Self.FK_MemberRelations_RelativeMembers">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FamilyTreeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MemberDate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="MemberID" Type="Int32" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_MemberDates_Members" FromRole="MemberDates" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="MemberRelation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" />
+          <Property Name="RelationID" Type="Int32" />
+          <Property Name="RelativeID" Type="Int32" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_MemberRelations_Members" FromRole="MemberRelations" ToRole="Members" />
+          <NavigationProperty Name="Relation" Relationship="Self.FK_MemberRelations_Relations" FromRole="MemberRelations" ToRole="Relations" />
+          <NavigationProperty Name="Member1" Relationship="Self.FK_MemberRelations_RelativeMembers" FromRole="MemberRelations" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MemberDates" Relationship="Self.FK_MemberDates_Members" FromRole="Members" ToRole="MemberDates" />
+          <NavigationProperty Name="MemberRelations" Relationship="Self.FK_MemberRelations_Members" FromRole="Members" ToRole="MemberRelations" />
+          <NavigationProperty Name="MemberRelations1" Relationship="Self.FK_MemberRelations_RelativeMembers" FromRole="Members" ToRole="MemberRelations" />
+        </EntityType>
+        <EntityType Name="Relation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Relation1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MemberRelations" Relationship="Self.FK_MemberRelations_Relations" FromRole="Relations" ToRole="MemberRelations" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="250" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_MemberDates_Members">
+          <End Role="Members" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="MemberDates" Type="Self.MemberDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberDates">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_Members">
+          <End Role="Members" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_Relations">
+          <End Role="Relations" Type="Self.Relation" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Relations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="RelationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberRelations_RelativeMembers">
+          <End Role="Members" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="MemberRelations" Type="Self.MemberRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="MemberRelations">
+              <PropertyRef Name="RelativeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FamilyTreeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MemberDates" EntityType="Self.MemberDate" />
+          <EntitySet Name="MemberRelations" EntityType="Self.MemberRelation" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Relations" EntityType="Self.Relation" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_MemberDates_Members" Association="Self.FK_MemberDates_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberDates" EntitySet="MemberDates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_Members" Association="Self.FK_MemberRelations_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_Relations" Association="Self.FK_MemberRelations_Relations">
+            <End Role="Relations" EntitySet="Relations" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberRelations_RelativeMembers" Association="Self.FK_MemberRelations_RelativeMembers">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberRelations" EntitySet="MemberRelations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FamilyTreeModelStoreContainer" CdmEntityContainer="FamilyTreeEntities">
+          <EntitySetMapping Name="MemberDates">
+            <EntityTypeMapping TypeName="FamilyTreeModel.MemberDate">
+              <MappingFragment StoreEntitySet="MemberDates">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateTitle" ColumnName="DateTitle" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberRelations">
+            <EntityTypeMapping TypeName="FamilyTreeModel.MemberRelation">
+              <MappingFragment StoreEntitySet="MemberRelations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="RelationID" ColumnName="RelationID" />
+                <ScalarProperty Name="RelativeID" ColumnName="RelativeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="FamilyTreeModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Relations">
+            <EntityTypeMapping TypeName="FamilyTreeModel.Relation">
+              <MappingFragment StoreEntitySet="Relations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Relation1" ColumnName="Relation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FamilyTreeModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
